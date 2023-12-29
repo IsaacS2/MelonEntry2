@@ -1,0 +1,43 @@
+References: https://docs.unity3d.com/ScriptReference/Rigidbody.MovePosition.html
+https://docs.unity3d.com/ScriptReference/Mathf.Max.html
+https://docs.unity3d.com/ScriptReference/Input.GetButtonDown.html
+https://docs.unity3d.com/ScriptReference/Rigidbody-velocity.html
+https://docs.unity3d.com/ScriptReference/Rigidbody.OnCollisionEnter.html
+https://docs.unity3d.com/ScriptReference/Input.GetButton.html
+https://docs.unity3d.com/ScriptReference/Rigidbody.OnCollisionStay.html
+https://docs.unity3d.com/ScriptReference/Input.GetAxis.html
+https://gamedevbeginner.com/how-to-jump-in-unity-with-or-without-physics/#jump_unity
+https://forum.unity.com/threads/cant-jump-while-moving.809367/
+https://www.youtube.com/watch?v=MFQhpwc6cKE&t=81s
+Script from a final project for 100-level college class (below)
+"using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+public class CameraControl : MonoBehaviour
+{
+    [SerializeField]
+    private GameObject player;
+    private float transformDivider;
+    private float cameraDist;
+    private float bonusVerticality;
+    // Start is called before the first frame update
+    void Start()
+    {
+        transformDivider = 0.3f;
+        cameraDist = -4.5f;
+        bonusVerticality = 0;
+    }
+
+    public void increaseY()
+    {
+        bonusVerticality += 5;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Quaternion newRotation = Quaternion.Euler((Input.GetAxis("Vertical") * 2), Input.GetAxis("Horizontal") * 2, 0);
+        transform.SetPositionAndRotation(new Vector3(player.transform.position.x * transformDivider, (player.transform.position.y * transformDivider) + bonusVerticality, player.transform.position.z + cameraDist), 
+            Quaternion.Slerp(transform.rotation, newRotation, 0.005f));
+    }
+}"
